@@ -1,19 +1,19 @@
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
-    	int left = 0;
-    	int right = 0;
-    	int end = nums.size();
-    	while(left < end){
-    		if( nums[left] == 0){
-    			left++;
-    		}
-    		else{
-    			if(left!=right)
-    				nums[right] = nums[left];
-    			left++;right++	
-    		}
-    	}
+    	//merge 
+    	merge(nums, 0, nums.size()-1);
 
+    }
+    int merge(vector<int>& nums, int start, int end){
+    	if( nums.size() == 1){
+    		return 0;
+    	}
+    	else{
+    		int center = (start+end)/2;
+    		int lsep = merge(nums, start, center);
+    		int rsep = merge(nums, center+1, end);
+    		//TODO: merge two
+    	}
     }
 };
