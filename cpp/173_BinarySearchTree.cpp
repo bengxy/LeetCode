@@ -8,15 +8,18 @@
  * };
  */
 class BSTIterator {
+private:
+    stack<TreeNode*> stk;
+    void build_index(TreeNode* index){
+        while( index!=NULL){
+            stk.push(index);
+            index = index->left;
+        }
+    }
 public:
-	TreeNode* cur;
-	stack<TreeNode*> stk;
+	
     BSTIterator(TreeNode *root) {
-    	cur = root;
-    	while( cur!=NULL){
-    		stk.push(cur);
-    		cur = cur->left;
-    	}
+    	build_index(root);
     }
 
     /** @return whether we have a next smallest number */
@@ -26,9 +29,15 @@ public:
 
     /** @return the next smallest number */
     int next() {
+        //if( !hasNext() ) return -1;
+        TreeNode* cur = stk.top();
+        stk.pop();
 
+        build_index(cur->right);
+        
     	return cur->val;
     }
+
 };
 
 /**
