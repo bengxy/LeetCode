@@ -8,9 +8,9 @@ public:
     		sort(tmp.begin(), tmp.end());
     		cont[tmp].push_back(s);
     	}
-    	vector<std::vector<string> res;
+    	vector<vector<string>> res;
     	for(auto iter:cont){
-    		res.push_back(*iter.second);
+    		res.push_back(iter.second);
     	}
     	return res;
         
