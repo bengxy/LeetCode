@@ -9,27 +9,51 @@
 class Solution {
 public:
     ListNode* sortList(ListNode* head) {
-        
-    }
-    ListNode* sort_sub_list(ListNode* head, ListNode* end){
-    	if( head == NULL || head->next == NULL) return head;
-        int base = head->val;
-        ListNode* p = head->next;
-        ListNode* last = head;
-		ListNode* tmp_head;
-		ListNode* p_next;
-         {
-        	if( p->val < base ){
-        		//p_next = p->next;
-        		last->next = p->next;
-        		p->next = head;
-        		head = p;
-        		p = last->next;
-        	}
-        	else{
-        		last = last->next;
-        		p = p->next;
-        	}
+        if( head == NULL || head->next == NULL)
+            return head;
+        //>=2
+        ListNode* tail = head->next->next;
+        while( tail!=NULL){
+            tail = tail->next;
         }
+        head = qs(head, tail);
+        return head;
+    }
+    ListNode* qs(ListNode* head, ListNode* tail){
+        //>=2
+        if( head->next->next == tail){
+            if(head->val > head->next->val){
+                //ListNode* tmp = tail;
+                head->next->next = head;
+                head = head->next;
+                head->next->next = tail;
+            }
+            return head;
+        }
+        ListNode* holder = head;
+        ListNode* p = head;
+        while(p->next!=tail){
+            if(p->next->val < head->val){
+                ListNode* tmp = p->next->next;
+                p->next->next = holder;
+                holder = p->next;
+                p->next = tmp;
+            }
+            else{
+                p=p->next;
+            }
+        }
+        cout<<"iter"<<endl;
+        ListNode* buf = holder;
+        while(buf!=NULL){
+            cout<<buf->val<<endl;
+        }
+
+
+        if( !(holder != head && holder->next != head) )
+            holder = qs(holder, head);
+        if( head->next!=tail && head->next->next!=tail)
+            head->next = qs(head->next, tail);
+        return holder;
     }
 };
