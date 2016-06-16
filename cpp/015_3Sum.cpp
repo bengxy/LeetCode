@@ -1,51 +1,46 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-    	std::vector<std::vector<int>> res;
+        vector<vector<int>> res;
+        if(nums.size()<3) 
+            return res;
+        sort(nums.begin(), nums.end());
+        int last = 0;
+        for(int i=0;i<nums.size()-2;i++){
+            if(i>0 && (nums[i]==nums[i-1]) )
+                continue;
+            for(int j=i+1;j<nums.size()-1;j++){
+                if(j>i+1 && (nums[j]==nums[j-1]) )
+                    continue;
+                int target = -(nums[i]+nums[j]);
+                
+                int index = -1;
+                if( target < nums[j+1] || target>nums[nums.size()-1] )
+                    continue;
+                else
+                    index = bs(nums, j+1, nums.size()-1, target);
 
-		nums.sort();
-        //erase;
-    
-
-        if( nums.size() >= 3){
-        	std::vector<int> tmp;
-        	
-        	int slow, quick;
-        	int base = 0;
-        	//int last = 0;
-        	while( base < nums.size() - 2 ){
-        		slow = base+1;
-        		while( slow < nums.size() -1 ){
-        			quick = slow+1;
-        			while( quick<nums.size() ){
-        				if( nums[base]+nums[slow]+nums[quick] == 0){
-        					tmp.push_back(nums[base]);
-        					tmp.push_back(nums[slow]);
-        					tmp.push_back(nums[quick]);
-        					quick = slow+2;
-        				}
-        				quick++;
-        			}
-        			slow++;
-        		}
-        		base++;
-        	}
-
-
-
+                if( index!=-1){
+                    int tmp[] = {nums[i], nums[j], nums[index]};
+                    vector<int> vec(tmp, tmp+3);
+                    res.push_back(vec);
+                }
+            }
         }
-        
         return res;
-        
+    }
+    int bs(vector<int>& nums, int start, int end, int target){        
+        while(start<=end){
+            int center = (start+end)/2;
+            if( target>nums[center]){
+                start = center+1;
+            }
+            else if( target<nums[center]){
+                end = center-1;
+            }
+            else
+                return center;
+        }
+        return -1;
     }
 };
-
-
--6 -4 -3 -1 0 2 2 5 6 10 100
--6 -4 -3 -1 0 2 2 5 6 10 100
--6 -4 -3 -1 0 2 2 5 6 10 100
-
-2 1 2 1 2 0 3 1 4 90
-
--13 
-
