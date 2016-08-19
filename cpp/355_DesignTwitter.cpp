@@ -2,7 +2,6 @@ class Twitter {
 public:
     /** Initialize your data structure here. */
     Twitter() {
-        
         unordered_map<int, user> all;
         unordered_map<int, int> tweet_pool;
     }
