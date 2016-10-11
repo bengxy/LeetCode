@@ -8,7 +8,7 @@ public:
         int ls = left.size();
         int rs = right.size();
         if( left.empty()){
-        	left.push(num)
+        	left.push(num);
         	return ;
         }
         if( ls > rs){
