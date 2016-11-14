@@ -1,34 +1,37 @@
 class LRUCache{
+private:
+    typedef struct MemNode{
+        int v;
+        Node* next;
+        Node* last;
+    }Node;
+    unordered_map<int, Node*> m;
+    Node* head;
+    //Node* tail;
 public:
     LRUCache(int capacity) {
-	    
-	    typedef struct node{
-	    	LRUNode* last;
-	    	LRUNode* next;
-	    	int val;
-	    }LRUNode;
+        //init
+        head = new Node[capacity+1];
+        for(int i=0;i<capacity;i++){
+            h[i].next = h+i+1;
+        }
+        h[capacity].next = h;
+        tail = h[capacity].next;
 
-	    LRUNode* head;
-		unordered_map<int, LRUNode*> cache;
+
+
     }
-
+    
     int get(int key) {
-        
+        auto pos = m.find(key);
+        if( pos == m.end())
+            return -1;
+        else{
+            
+        }
     }
     
     void set(int key, int value) {
-        if ( cache.find(key)==cache.end()){
-        	LRUNode tmp = new LRUNode();
-        	tmp->val = value;
-        	tmp->last = head->last;
-        	tmp->next = head;
-        	cache[key] = &tmp;
-        }
-    }
-    void move2head(LRUNode* target){
-
-    }
-    void insert2head(LRUNode* target){
-
+        
     }
 };
