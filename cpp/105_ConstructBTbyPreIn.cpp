@@ -9,25 +9,23 @@
  */
 class Solution {
 public:
-	int p, i;
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-    	p = 0, i = 0;
-    	return builder(preorder, 0, inorder, 0);
-    }
-    TreeNode* builder(vector<int>& preorder,  vector<int>& inorder){
-    	if( p >=preorder.size())
-    		return NULL;
-    	TreeNode* node = new TreeNode(preorder[p]);
+        stack<int> stk;
 
-    	if( preorder[p] == inorder[i]){
-    		//p+1;i+1;
-    		//node->left = NULL;
-    		node->right = builder(preorder, p+1, inorder, i+1);	
-    	}
-    	else{
-    		node->left = helper(preorder, p, inorder, i+1);
-    		node->right = helper(preorder, p+1, inorder, i+1);
-    	}
-    	return node;
     }
+    TreeNode* builder(stack<int>& stk, vector<int>& preorder,int& p, vector<int>& inorder, int& i){
+        
+        if(preorder[p] != inorder[i]){
+            stk.push(preorder[p++]);
+            TreeNode* hand = builder(stk, preorder, p, inorder, i);
+            if(stk.top() == inorder[i])
+        }
+        else{
+            TreeNode* node = new TreeNode(preorder[i]);
+            p++; i++;
+            //stk.pop();
+        }
+        return node;
+    } 
+
 };
