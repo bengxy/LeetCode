@@ -8,27 +8,29 @@
  */
 class Solution {
 public:
-	unordered_map<int, UndirectedGraphNode*> done;
-	typedef pair<int, UndirectedGraphNode*> ele;
-
     UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
+        unordered_map<int, UndirectedGraphNode*> passed;
+        return builder(passed, node);
+    }
+    UndirectedGraphNode* builder(unordered_map<int, UndirectedGraphNode*>& passed,
+        UndirectedGraphNode *node){
+        if(node == NULL)
+            return NULL;
+        
+        UndirectedGraphNode* mynode = new UndirectedGraphNode(node->label);
+        passed[node->label] = mynode;
 
-        UndirectedGraphNode* res = new UndirectedGraphNode();
-        res->label = node->label;
-
-        done.insert( ele(res->label, res));
-
-        for(auto iter = node->neighbors.begin(); iter!=neighbors.end(); iter++){
-        	if( !done.find(*iter->label) ）{
-        		//not in hash
-        		UndirectedGraphNode* tmp = cloneGraph(*iter);
-        	}
-        	else{
-        		//in hash so skip; just add into the neighbors
-        		res->neighbors.push_back( done.at(*iter->label) );
-        	}
+        for(auto& neighbors: node->neighbors){
+        //for(int i=0;i<node->neighbors.size();i++){
+          //  auto neighbors = node->neighbors[i];
+            if( passed.find(neighbors->label) == passed.end()){
+                UndirectedGraphNode* tmp = builder(passed, neighbors);
+                mynode->neighbors.push_back(tmp);
+            }
+            else{
+                mynode->neighbors.push_back(passed[neighbors->label]);
+            }
         }
-
-        return res;
+        return mynode;
     }
 };
