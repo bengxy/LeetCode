@@ -1,22 +1,21 @@
 class Solution {
 public:
     bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
-        vector< pair<int, int> > toSort;
-        for( int i=0;i<nums.size();i++){
-        	toSort.push_back(pair<int,int>(nums[i], i));
+        if(k<=0 || t<0 || nums.size() <2)
+            return false;
+        set<int> v;
+        for(int i=0;i<nums.size();i++){
+            if(i>k)
+                v.erase(nums[i-k-1]); //sliding window
+            
+            //Let's find the lowest num bigger than num[i]-t : is the possible number
+            // and if this number close to nums[i]+-t ; than it is!
+            set<int>::iterator lower = v.lower_bound(nums[i]-t);    
+           
+            if(lower != v.end() && abs(nums[i] - *lower)<=t)
+                return true;
+            v.insert(nums[i]);
         }
-        std::sort(toSort.begin(), toSort.end(), cmp);
-        for( int i=0;i<nums.size();i++){
-        	int j = i+1;
-        	//while( )
-        	while( j< nums.size() ){
-        		if( toSort[j].first - toSort[i].first > t)
-        			break;
-        		else
-        	}
-        }
-    }
-    bool cmp{
-
+        return false;
     }
 };
