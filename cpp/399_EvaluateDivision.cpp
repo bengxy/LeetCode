@@ -14,6 +14,7 @@ public:
 			string lhs = equations[i].first;
 			string rhs = equations[i].second;
 			//neighbor[equations[i].second].
+			if( link.count(lhs == 0))
 			link[lhs] = 
 			link[rhs] = 
 
